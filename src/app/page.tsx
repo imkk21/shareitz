@@ -1,4 +1,3 @@
-// src/app/page.tsx
 "use client";
 
 import { useState } from "react";
@@ -16,7 +15,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-gray-100 flex items-center justify-center">
+    <div className="min-h-screen bg-gray-900 text-gray-100 flex flex-col items-center justify-center">
       <div className="bg-gray-800 p-8 rounded-lg shadow-lg text-center">
         <h1 className="text-4xl font-bold mb-4">
           Welcome to <span className="text-blue-400">Shareitz</span>
@@ -40,6 +39,31 @@ export default function Home() {
           </button>
         </form>
       </div>
+
+      <footer className="mt-10 text-center text-gray-400">
+        <p>
+          Built with ❤️ by{" "}
+          <a
+            href="https://github.com/imkk21"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-400 hover:underline"
+          >
+            Your GitHub Username
+          </a>
+        </p>
+        <p className="text-sm mt-2">
+          Source code available on{" "}
+          <a
+            href="https://github.com/imkk2shareitz"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-purple-400 hover:underline"
+          >
+            GitHub
+          </a>
+        </p>
+      </footer>
     </div>
   );
 }

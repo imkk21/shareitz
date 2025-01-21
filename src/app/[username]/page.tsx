@@ -27,6 +27,32 @@ export default function UserPage() {
         <div className="space-y-4">
           <MessageList username={username} />
         </div>
+
+        {/* Footer */}
+        <footer className="mt-10 text-center text-gray-400">
+          <p>
+            Built with ❤️ by{"imkk21"}
+            <a
+              href="https://github.com/imkk21"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-400 hover:underline"
+            >
+              Your GitHub Username
+            </a>
+          </p>
+          <p className="text-sm mt-2">
+            Source code available on{" "}
+            <a
+              href="https://github.com/imkk21/shareitz"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-purple-400 hover:underline"
+            >
+              GitHub
+            </a>
+          </p>
+        </footer>
       </div>
     </div>
   );
