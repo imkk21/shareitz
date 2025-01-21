@@ -31,14 +31,14 @@ export default function UserPage() {
         {/* Footer */}
         <footer className="mt-10 text-center text-gray-400">
           <p>
-            Built with ❤️ by{"imkk21"}
+            Built with ❤️ by{" "}
             <a
               href="https://github.com/imkk21"
               target="_blank"
               rel="noopener noreferrer"
               className="text-blue-400 hover:underline"
             >
-              Your GitHub Username
+              imkk21
             </a>
           </p>
           <p className="text-sm mt-2">
