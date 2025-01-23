@@ -3,7 +3,9 @@
 import { useEffect, useState } from "react";
 import { ref, onValue, remove, update } from "firebase/database";
 import { database } from "../firebase";
-import { FaCopy, FaTrash, FaEdit, FaCheck, FaTimes } from "react-icons/fa"; // Import icons
+import { FaCopy, FaTrash, FaEdit, FaCheck, FaTimes } from "react-icons/fa";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 type Message = {
   id: string;
@@ -17,8 +19,8 @@ type MessageListProps = {
 
 const MessageList = ({ username }: MessageListProps) => {
   const [messages, setMessages] = useState<Message[]>([]);
-  const [editingId, setEditingId] = useState<string | null>(null); // Track which message is being edited
-  const [editedText, setEditedText] = useState(""); // Store the edited text
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editedText, setEditedText] = useState("");
 
   useEffect(() => {
     const messagesRef = ref(database, `messages/${username}`);
@@ -36,7 +38,7 @@ const MessageList = ({ username }: MessageListProps) => {
 
   const handleCopy = (text: string) => {
     navigator.clipboard.writeText(text).then(() => {
-      alert("Copied to clipboard!");
+      toast.success("Copied to clipboard!");
     });
   };
 
@@ -44,10 +46,11 @@ const MessageList = ({ username }: MessageListProps) => {
     const messageRef = ref(database, `messages/${username}/${id}`);
     remove(messageRef)
       .then(() => {
-        alert("Message deleted!");
+        toast.success("Message deleted!");
       })
       .catch((error) => {
         console.error("Error deleting message:", error);
+        toast.error("Failed to delete message.");
       });
   };
 
@@ -55,23 +58,24 @@ const MessageList = ({ username }: MessageListProps) => {
     const messageRef = ref(database, `messages/${username}/${id}`);
     update(messageRef, { text: newText })
       .then(() => {
-        setEditingId(null); // Exit edit mode
-        alert("Message updated!");
+        setEditingId(null);
+        toast.success("Message updated!");
       })
       .catch((error) => {
         console.error("Error updating message:", error);
+        toast.error("Failed to update message.");
       });
   };
 
   return (
     <div className="space-y-4">
+      <ToastContainer />
       {messages.map((message) => (
         <div
           key={message.id}
           className="bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-700 relative"
         >
           {editingId === message.id ? (
-            // Edit mode
             <div className="flex flex-col space-y-2">
               <textarea
                 value={editedText}
@@ -87,7 +91,7 @@ const MessageList = ({ username }: MessageListProps) => {
                   <FaCheck className="mr-2" /> Save
                 </button>
                 <button
-                  onClick={() => setEditingId(null)} // Cancel edit
+                  onClick={() => setEditingId(null)}
                   className="bg-red-600 text-white px-3 py-1 rounded-lg hover:bg-red-700 transition duration-200 flex items-center"
                 >
                   <FaTimes className="mr-2" /> Cancel
@@ -95,7 +99,6 @@ const MessageList = ({ username }: MessageListProps) => {
               </div>
             </div>
           ) : (
-            // Display mode
             <div className="flex justify-between items-start">
               <pre className="text-gray-100 whitespace-pre-wrap font-mono flex-1">
                 {message.text}
@@ -110,8 +113,8 @@ const MessageList = ({ username }: MessageListProps) => {
                 </button>
                 <button
                   onClick={() => {
-                    setEditingId(message.id); // Enter edit mode
-                    setEditedText(message.text); // Set initial text for editing
+                    setEditingId(message.id);
+                    setEditedText(message.text);
                   }}
                   className="text-gray-400 hover:text-green-500 transition duration-200"
                   title="Edit"
