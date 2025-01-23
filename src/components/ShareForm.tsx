@@ -1,4 +1,3 @@
-// src/components/ShareForm.tsx
 "use client";
 
 import { useState } from "react";
